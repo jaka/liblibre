@@ -20,6 +20,10 @@ $(TARGETS): $(OBJECTS)
 install: $(TARGETS)
 	install -m 755 $(TARGETS) /usr/lib/
 
+install-dev:
+	mkdir -p /usr/include/libre
+	cp ./include/*.h /usr/include/libre
+
 clean:
 	rm -fr $(OBJECTS)
 	rm -f $(TARGETS)
