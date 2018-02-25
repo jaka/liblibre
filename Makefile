@@ -1,9 +1,9 @@
-OPTS	:= -O2
-CFLAGS	+= -Iinclude -Wall -Werror -Wextra -s -pedantic -fdata-sections -ffunction-sections -fno-exceptions -fstrict-aliasing -fPIC -std=c99
+OPTS := -O2 -s
+CFLAGS += -Iinclude -Wall -Werror -Wextra -pedantic -fdata-sections -ffunction-sections -fno-exceptions -fstrict-aliasing -fPIC -std=c90
 LDFLAGS	+= -Wl,--gc-sections
-SFLAGS	:= -R .comment -R .gnu.version -R .gnu.version_r -R .note -R .note.ABI-tag
+SFLAGS := -R .comment -R .gnu.version -R .gnu.version_r -R .note -R .note.ABI-tag
 
-CC	?= cc
+CC ?= cc
 
 SOURCES	:= $(wildcard src/*.c)
 OBJECTS	:= $(patsubst %.c,%.o,$(SOURCES))
@@ -15,7 +15,7 @@ all: $(OBJECTS) $(TARGETS)
 	$(CC) $(CFLAGS) $(LDFLAGS) $(OPTS) -c -o $@ $<
 
 $(TARGETS): $(OBJECTS)
-	$(CC) $(CFLAGS) $(LDFLAGS) $(OPTS) -shared -o $@ $^
+	$(CC) $(CFLAGS) $(LDFLAGS) -shared -o $@ $^
 
 install: $(TARGETS)
 	install -m 755 $(TARGETS) /usr/lib/
@@ -27,3 +27,6 @@ install-dev:
 clean:
 	rm -fr $(OBJECTS)
 	rm -f $(TARGETS)
+
+test:
+	$(MAKE) -C test/ all

@@ -6,8 +6,8 @@
 
 static char *lu_cfgarg = NULL;
 
-char lu_getopt(const lu_args *args, const char *opts) {
-
+char lu_getopt(const lu_args *args, const char *opts)
+{
   char *p, *q, *r;
   static int i = 1;
 
@@ -25,8 +25,9 @@ char lu_getopt(const lu_args *args, const char *opts) {
     return '_';
   }
   p++;
-  if (!*p)
+  if (!*p) {
     return '?';
+  }
   if (*p == '-') {
     /* -- */
     i = 1;
@@ -36,8 +37,9 @@ char lu_getopt(const lu_args *args, const char *opts) {
   /* Find opts letter: q. */
   q = p;
   r = strchr(opts, *q);
-  if (!r || *q == ':')
+  if (!r || *q == ':') {
     return '?';
+  }
 
   r++;
   if (*r == ':') {
@@ -51,14 +53,15 @@ char lu_getopt(const lu_args *args, const char *opts) {
       lu_cfgarg = *(args->argv + i);
       i++;
     }
-    else
+    else {
       return ':';
+    }
   }
 
   return *q;
 }
 
-const char *lu_getarg(void) {
-
+const char *lu_getarg(void)
+{
   return lu_cfgarg;
 }
