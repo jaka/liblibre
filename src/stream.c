@@ -111,7 +111,7 @@ int lu_stream_readline(lu_stream_t *s, char *buf, const size_t buflen) {
   p = s->size;
   t = s->tail;
 
-  do {
+  while (p > 0) {
 
     if (*t == '\n') {
       *r = 0;
@@ -130,7 +130,7 @@ int lu_stream_readline(lu_stream_t *s, char *buf, const size_t buflen) {
     if (t == s->end)
       t = s->buf;
 
-  } while (p > 0);
+  }
 
   return LU_EMPTY;
 }
